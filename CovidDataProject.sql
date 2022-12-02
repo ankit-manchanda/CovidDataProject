@@ -37,6 +37,12 @@ where continent is not null
 group by continent
 order by 2 desc;
 
+-- Showing Global Death Count
+Select sum(cast(new_cases as int)) as total_cases, sum(convert(int, new_deaths)) as total_deaths, sum(convert(int, new_deaths)) / sum(new_cases) * 100 as DeathPercentage
+from ProjectPortfolio..CovidDeaths
+where continent is not null
+order by 1, 2;
+
 --Total vaccinations against population
 
 Select dea.continent, dea.location, dea.date, vac.new_vaccinations, sum(convert(bigint,vac.new_vaccinations)) over (partition by dea.location order by dea.location, dea.date) as sum_new_vaccinations, dea.population
